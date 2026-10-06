@@ -62,7 +62,7 @@ class InvenTreeCurrencyExchangeNG(APICallMixin, CurrencyExchangeMixin, SettingsM
         )
 
         if response.status_code == 200:
-            rates = transform_currency_rates(response.json())
+            rates = {item['quote']: item['rate'] for item in response.json()}
             rates[base_currency] = 1.00
 
             return rates
@@ -80,9 +80,6 @@ class InvenTreeCurrencyExchangeNG(APICallMixin, CurrencyExchangeMixin, SettingsM
             'GBP': 0.77,
             'UAH': 45.0,
         }
-
-    def transform_currency_rates(data: list) -> dict:
-        return {item['quote']: item['rate'] for item in data}
 
     @property
     def api_url(self):
