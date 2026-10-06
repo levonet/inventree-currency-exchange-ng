@@ -3,6 +3,8 @@
 from plugin import InvenTreePlugin
 from plugin.mixins import APICallMixin, CurrencyExchangeMixin, SettingsMixin
 
+import structlog
+
 from . import PLUGIN_VERSION
 
 logger = structlog.get_logger('inventree')
