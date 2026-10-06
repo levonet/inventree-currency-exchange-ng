@@ -47,27 +47,27 @@ class InvenTreeCurrencyExchangeNG(APICallMixin, CurrencyExchangeMixin, SettingsM
     def update_exchange_rates(self, base_currency: str, symbols: list[str]) -> dict:
         """Update currency exchange rates for InvenTree."""
 
-        # response = self.api_call(
-        #     '/v2/rates',
-        #     url_args={'base': [base_currency], 'quotes': symbols, 'providers': [self.get_setting('PROVIDER')]},
-        #     simple_response=False,
-        # )
-        # logger.info(
-        #     'GET %s: CODE %s',
-        #     self.api_url,
-        #     response.status_code,
-        # )
+        response = self.api_call(
+            '/v2/rates',
+            url_args={'base': [base_currency], 'quotes': symbols, 'providers': [self.get_setting('PROVIDER')]},
+            simple_response=False,
+        )
+        logger.info(
+            'GET %s: CODE %s',
+            self.api_url,
+            response.status_code,
+        )
 
-        # if response.status_code == 200:
-        #     rates = transform_currency_rates(response.json())
-        #     rates[base_currency] = 1.00
+        if response.status_code == 200:
+            rates = transform_currency_rates(response.json())
+            rates[base_currency] = 1.00
 
-        #     return rates
-        # logger.warning(
-        #     'Failed to update exchange rates from %s: Server returned status %s',
-        #     self.api_url,
-        #     response.status_code,
-        # )
+            return rates
+        logger.warning(
+            'Failed to update exchange rates from %s: Server returned status %s',
+            self.api_url,
+            response.status_code,
+        )
 
 
         # API https://frankfurter.dev
