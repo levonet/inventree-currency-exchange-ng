@@ -28,18 +28,15 @@ class InvenTreeCurrencyExchangeNG(CurrencyExchangeMixin, SettingsMixin, InvenTre
     # MIN_VERSION = '0.18.0'
     # MAX_VERSION = '2.0.0'
 
-    
-    
-    
+
     # Plugin settings (from SettingsMixin)
     # Ref: https://docs.inventree.org/en/latest/plugins/mixins/settings/
     SETTINGS = {
-        # Define your plugin settings here...
-        'CUSTOM_VALUE': {
-            'name': 'Custom Value',
+        'PROVIDER': {
+            'name': 'Central banks or official institutions',
             'description': 'A custom value',
-            'validator': int,
-            'default': 42,
+            'choices': [('ECB','European Central Bank'),('BOC','Bank of Canada'),('NBU','Natsionalnyi Bank Ukrainy'),('FED','Federal Reserve Bank of St. Louis')],
+            'default': 'ECB',
         }
     }
     
@@ -52,10 +49,5 @@ class InvenTreeCurrencyExchangeNG(CurrencyExchangeMixin, SettingsMixin, InvenTre
             'USD': 1.0,
             'EUR': 0.85,
             'GBP': 0.75,
+            'UAH': 45.0,
         }
-    
-    
-    
-    
-    
-    
