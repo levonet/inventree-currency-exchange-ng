@@ -55,9 +55,10 @@ class InvenTreeCurrencyExchangeNG(APICallMixin, CurrencyExchangeMixin, SettingsM
             simple_response=False,
         )
         logger.info(
-            'GET %s: CODE %s',
-            self.api_url,
+            'GET %s: CODE %s: BODY %s',
+            response.url,
             response.status_code,
+            response.text,
         )
 
         if response.status_code == 200:
