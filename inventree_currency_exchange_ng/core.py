@@ -1,9 +1,9 @@
 """Plugin for requesting exchange rates from an external API."""
 
+import structlog
+
 from plugin import InvenTreePlugin
 from plugin.mixins import APICallMixin, CurrencyExchangeMixin, SettingsMixin
-
-import structlog
 
 from . import PLUGIN_VERSION
 
@@ -30,16 +30,10 @@ class InvenTreeCurrencyExchangeNG(
     WEBSITE = "https://github.com/levonet/inventree-currency-exchange-ng"
     LICENSE = "MIT"
 
-    # Optionally specify supported InvenTree versions
-    # MIN_VERSION = '0.18.0'
-    # MAX_VERSION = '2.0.0'
-
-    # Plugin settings (from SettingsMixin)
-    # Ref: https://docs.inventree.org/en/latest/plugins/mixins/settings/
     SETTINGS = {
         "PROVIDER": {
             "name": "Central banks or official institutions",
-            "description": "A custom value",
+            "description": "Choose a provider to get a specific exchange rate",
             "choices": [("ECB", "European Central Bank")],
             "default": "ECB",
         }
@@ -54,17 +48,9 @@ class InvenTreeCurrencyExchangeNG(
         if response.status_code == 200:
             providers = [(item["key"], item["name"]) for item in response.json()]
 
-        logger.info(
-            "GET %s: CODE %s",
-            response.url,
-            response.status_code,
-        )
-
         if providers:
             self.SETTINGS["PROVIDER"]["choices"] = providers
 
-    # Support for currency exchange rates (from CurrencyExchangeMixin)
-    # Ref: https://docs.inventree.org/en/latest/plugins/mixins/currency/
     def update_exchange_rates(self, base_currency: str, symbols: list[str]) -> dict:
         """Update currency exchange rates for InvenTree."""
 
@@ -76,12 +62,6 @@ class InvenTreeCurrencyExchangeNG(
                 "providers": [self.get_setting("PROVIDER")],
             },
             simple_response=False,
-        )
-        logger.info(
-            "GET %s: CODE %s: BODY %s",
-            response.url,
-            response.status_code,
-            response.text,
         )
 
         if response.status_code == 200:
