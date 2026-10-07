@@ -54,6 +54,12 @@ class InvenTreeCurrencyExchangeNG(
         if response.status_code == 200:
             providers = [(item["key"], item["name"]) for item in response.json()]
 
+        logger.info(
+            "GET %s: CODE %s",
+            response.url,
+            response.status_code,
+        )
+
         if providers:
             self.SETTINGS["PROVIDER"]["choices"] = providers
 
